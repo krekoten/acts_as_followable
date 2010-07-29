@@ -21,12 +21,12 @@ module ActsAsFollowable
       def pending_friendships_for_me
         followed_me.find_all_by_approved false
       end
-      alias :pending_friends_for_me, :pending_friendships_for_me
+      alias_method :pending_friends_for_me, :pending_friendships_for_me
       
       def pending_friendships_by_me
         followed_by_me.find_all_by_approved false
       end
-      alias :pending_friends_by_me, :pending_friendships_by_me
+      alias_method :pending_friends_by_me, :pending_friendships_by_me
       
       def is_pending_friends_with? friend
         pending_friendships_by_me.include?(friend) || pending_friendships_for_me.include?(friend)
