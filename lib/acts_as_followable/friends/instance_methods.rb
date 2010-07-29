@@ -2,7 +2,7 @@ module ActsAsFollowable
   module Friends
     module InstanceMethods
       def friends
-        followed_by_me.find_all_by_approved true
+        followed_by_me.find_all_by_approved(true).map(&:followers)
       end
       
       def friend_ids
@@ -19,17 +19,17 @@ module ActsAsFollowable
       end
       
       def pending_friendships_for_me
-        followed_me.find_all_by_approved false
+        followed_me.find_all_by_approved(false).map(&:follows)
       end
       alias_method :pending_friends_for_me, :pending_friendships_for_me
       
       def pending_friendships_by_me
-        followed_by_me.find_all_by_approved false
+        followed_by_me.find_all_by_approved(false).map(&:followers)
       end
       alias_method :pending_friends_by_me, :pending_friendships_by_me
       
       def is_pending_friends_with? friend
-        pending_friendships_by_me.include?(friend) || pending_friendships_for_me.include?(friend)
+        pending_friendships_by_me.include?(friend) || pending_friendships_for_me.map(&:followers).include?(friend)
       end
       
       def is_friends_or_pending_with? friend
