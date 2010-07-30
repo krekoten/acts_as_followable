@@ -6,7 +6,7 @@ module ActsAsFollowable
       end
       
       def friend_ids
-        ActsAsFollowable::Follow.connection.select_values("SELECT follower_id FROM followed WHERE followed_id = '#{self.id}' AND followed_type = '#{self.class.to_s}' AND approved = 1")
+        ActsAsFollowable::Follow.connection.select_values("SELECT follower_id FROM follows WHERE followed_id = '#{self.id}' AND followed_type = '#{self.class.to_s}' AND approved = 1")
       end
       
       def become_friend_with friend
