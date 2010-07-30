@@ -2,7 +2,7 @@ ActiveRecord::Schema.define(:version => 1) do
   
   begin
     drop_table :users
-    drop_table :follows
+    drop_table :follow
   rescue
     puts $!
   end
@@ -12,14 +12,14 @@ ActiveRecord::Schema.define(:version => 1) do
   end
   
   create_table :follows, :force => true do |t|
-    t.string    :followers_type
-    t.integer   :followers_id
-    t.string    :follows_type
-    t.integer   :follows_id
+    t.string    :follower_type
+    t.integer   :follower_id
+    t.string    :followed_type
+    t.integer   :followed_id
     t.boolean   :approved, :default => false
     t.timestamps
   end
   
-  add_index :follows, :followers_id
-  add_index :follows, :follows_id
+  add_index :follows, :follower_id
+  add_index :follows, :followed_id
 end

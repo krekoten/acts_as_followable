@@ -1,8 +1,8 @@
 module ActsAsFollowable
   module ClassMethods
     def acts_as_followable *plugins
-      has_many :followed_by_me, :as => :followers, :class_name => 'ActsAsFollowable::Follow'
-      has_many :followed_me, :as => :follows, :class_name => 'ActsAsFollowable::Follow'
+      has_many :followed_by_me, :as => :follower, :class_name => 'ActsAsFollowable::Follow'
+      has_many :followed_me, :as => :followed, :class_name => 'ActsAsFollowable::Follow'
       
       plugins.each do |plugin|
         _init_plugin plugin

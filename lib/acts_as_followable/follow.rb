@@ -2,14 +2,14 @@ module ActsAsFollowable
   class Follow < ActiveRecord::Base
     set_table_name 'follows'
     
-    belongs_to :follows, :polymorphic => true
-    belongs_to :followers, :polymorphic => true
+    belongs_to :followed, :polymorphic => true
+    belongs_to :follower, :polymorphic => true
     
     class << self
       
       # Create following
-      def follow follower, follows, options = {}
-        create(options.merge({:followers => follower, :follows => follows}))
+      def follow follower, followed, options = {}
+        create(options.merge({:follower => follower, :followed => followed}))
       end
     end
   end

@@ -20,13 +20,13 @@ module ActsAsFollowable
         @user1.should have(0).follows
       end
       
-      it 'should have 0 followers' do
+      it 'should have 0 follower' do
         @user1.should have(0).followers
       end
     end
   end
   
-  describe 'when user1 follows user2' do
+  describe 'when user1 followed user2' do
     before :all do
       @user1.follow @user2
     end
@@ -43,7 +43,7 @@ module ActsAsFollowable
       lambda {@user1.unfollow @user3}.should raise_exception(ActiveRecord::RecordNotFound)
     end
     
-    describe 'when user1 unfollows user2' do
+    describe 'when user1 unfollowed user2' do
       before :all do
         @user1.unfollow @user2
       end
@@ -52,7 +52,7 @@ module ActsAsFollowable
         @user1.should have(0).follows
       end
 
-      it 'user2 should have 0 followers' do
+      it 'user2 should have 0 follower' do
         @user2.should have(0).followers
       end
     end

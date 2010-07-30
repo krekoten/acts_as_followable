@@ -14,7 +14,7 @@ module ActsAsFollowable
     # Raises ActiveRecord::RecordNotFound if unfollowing user that is not followed
     def unfollow followed
       raise ActsAsFollowable::UnfollowableObjectError unless followed.respond_to?(:followable?) && followed.followable?
-      if following = followed_by_me.find_by_follows_id!(followed)
+      if following = followed_by_me.find_by_followed_id!(followed)
         following.destroy
       end
     end
@@ -31,13 +31,13 @@ module ActsAsFollowable
     
     def follows_ids
       ActsAsFollowable::Follow.connection.select_values(
-        "SELECT follows_id FROM follows WHERE followers_id = '#{self.id}' AND followers_type = '#{self.class.to_s}'"
+        "SELECT followed_id FROM followed WHERE follower_id = '#{self.id}' AND follower_type = '#{self.class.to_s}'"
       )
     end
     
-    def followers_id
+    def followers_ids
       ActsAsFollowable::Follow.connection.select_values(
-        "SELECT followers_id FROM follows WHERE follows_id = '#{self.id}' AND follows_type = '#{self.class.to_s}'"
+        "SELECT follower_id FROM followed WHERE followed_id = '#{self.id}' AND followed_type = '#{self.class.to_s}'"
       )
     end
   end
