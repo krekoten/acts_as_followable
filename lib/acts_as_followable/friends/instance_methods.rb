@@ -13,6 +13,7 @@ module ActsAsFollowable
         ActsAsFollowable::Follow.follow self, friend, :approved => true
         ActsAsFollowable::Follow.follow friend, self, :approved => true
       end
+      alias_method :become_friends_with, :become_friend_with
       
       def request_friendship_with friend
         ActsAsFollowable::Follow.follow self, friend
