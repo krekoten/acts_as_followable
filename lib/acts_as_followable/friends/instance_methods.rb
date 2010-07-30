@@ -38,13 +38,8 @@ module ActsAsFollowable
       end
       
       def accept_friendship_with friend
-        if friendship = followed_me.find_by_follower_id_and_follower_type_and_approved(friend.id, friend.class.to_s, false)
-          ActsAsFollowable::Follow.follow self, friend, :approved => true
-        elsif friendship = friend.followed_me.find_by_follower_id_and_follower_type_and_approved(self.id, self.class.to_s, false)
-          ActsAsFollowable::Follow.follow friend, self, :approved => true
-        else
-          raise ActiveRecord::RecordNotFound
-        end
+        friendship = followed_me.find_by_follower_id_and_follower_type_and_approved!(friend.id, friend.class.to_s, false)
+        ActsAsFollowable::Follow.follow self, friend, :approved => true
         friendship.update_attribute(:approved, true)
       end
       
